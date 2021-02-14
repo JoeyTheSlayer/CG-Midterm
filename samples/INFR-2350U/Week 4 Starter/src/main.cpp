@@ -71,6 +71,8 @@ int main() {
 		int NoLights = 0;
 		int NoTextures = 0;
 
+		bool textures = false;
+
 		// These are our application / scene level uniforms that don't necessarily update
 		// every frame
 		shader->SetUniform("u_LightPos", lightPos);
@@ -244,11 +246,27 @@ int main() {
 
 				if (ImGui::Button("Textures On/Off"))
 				{
-					shader->SetUniform("u_BothLights", BothLights = 0);
-					shader->SetUniform("u_AmbLights", AmbLights = 0);
-					shader->SetUniform("u_SpecLights", SpecLights = 0);
-					shader->SetUniform("u_NoLights", NoLights = 0);
-					shader->SetUniform("u_NoTextures", NoTextures = 1);
+					if (textures == true)
+					{
+						shader->SetUniform("u_BothLights", BothLights = 0);
+						shader->SetUniform("u_AmbLights", AmbLights = 0);
+						shader->SetUniform("u_SpecLights", SpecLights = 0);
+						shader->SetUniform("u_NoLights", NoLights = 0);
+						shader->SetUniform("u_NoTextures", NoTextures = 1);
+
+						textures = false;
+					}
+					else if (textures == false)
+					{
+						shader->SetUniform("u_BothLights", BothLights = 1);
+						shader->SetUniform("u_AmbLights", AmbLights = 0);
+						shader->SetUniform("u_SpecLights", SpecLights = 0);
+						shader->SetUniform("u_NoLights", NoLights = 0);
+						shader->SetUniform("u_NoTextures", NoTextures = 0);
+
+						textures = true;
+					}
+				
 				}
 			}
 
